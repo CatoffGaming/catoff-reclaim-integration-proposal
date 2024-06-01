@@ -22,16 +22,10 @@ The Catoff-Reclaim Integration Project is designed to facilitate the integration
 Before adding a new integration, you must submit a proposal. Your proposal should follow the template provided below. The proposal serves to explain your intended integration, gather community feedback, and document the design decisions.
 
 ### Proposal Template
-
 ```markdown
----
-proposal: <Proposal Number>
-title: <Proposal Title>
-status: Draft
-type: Integration
-author: <Your Name> <Your Email>
-created: <Date>
----
+| proposal | title              | description                   | author                     | discussions-to | status | type        | category | created    | requires |
+|----------|--------------------|-------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
+| <Proposal Number> | <Proposal Title> | <Brief description of the proposal> | <Your Name> <Your Email> |                | Draft  | Integration | CRIP     | <Date>    |          |
 
 ## Title
 
@@ -51,8 +45,8 @@ created: <Date>
 
 ## Data Provider
 
-- **Name:** <Data Provider Name>
-- **Hash Value:** <Hash Value from Reclaim Website>
+- **Name**: <Data Provider Name>
+- **Hash Value**: <Hash Value from Reclaim Website>
 
 ## Code Snippet
 
