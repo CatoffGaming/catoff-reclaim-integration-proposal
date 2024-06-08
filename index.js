@@ -1,11 +1,10 @@
 const express = require('express')
-const bodyParser = require('body-parser')
-const reclaimController = require('./src/controllers/reclaimController')
+const {signHandler} = require('./src/controllers/reclaimController')
 
 const app = express()
-app.use(bodyParser.json())
+app.use(express.json())
 
-app.post('/reclaim/sign', reclaimController.signHandler)
+app.post('/reclaim/sign',signHandler);
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
