@@ -7,8 +7,11 @@ const { processUberData } = require('./uberService')
 
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
+  console.log(providerName)
   const reclaimAppID = RECLAIM_APP_ID[providerName]
+  console.log(reclaimAppID)
   const reclaimAppSecret = process.env[`${providerName}_SECRET`]
+  console.log(reclaimAppSecret)
 
   console.log(
     `Sending signature request to Reclaim for userId: ${userId} with providerName: ${providerName}`

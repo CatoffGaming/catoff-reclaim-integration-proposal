@@ -1,12 +1,11 @@
-const {ReclaimServiceResponse}=require("../utils/reclaimServiceResponse")
+const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse')
 
-exports.processUberData()=async (proof,providerName)=>{
-  
-  const uberUsername= JSON.parse(proof[0].claimData.context).extractedParameters.userName;
+exports.processUberData = async (proof, providerName) => {
+  const uberUsername = JSON.parse(proof[0].claimData.context)
+    .extractedParameters.userName
 
-  const lastUpdateTimeStamp = JSON.parse(proof[0].claimData.timestampS);
-  const rideCounts=await getrideCounts(uberUsername);
-    
+  const lastUpdateTimeStamp = JSON.parse(proof[0].claimData.timestampS)
+  const rideCounts = await getrideCounts(uberUsername)
 
   return new ReclaimServiceResponse(
     providerName,
@@ -15,11 +14,9 @@ exports.processUberData()=async (proof,providerName)=>{
     parseInt(rideCounts, 10),
     proof[0]
   )
-
 }
 
-const getrideCounts= async(username)=>{
-    
+const getrideCounts = async username => {
   const url = `https://riders.uber.com/trips-legacy?page=1`
   const ubertoken = process.env.RECLAIM_UBER_TOKEN
 
