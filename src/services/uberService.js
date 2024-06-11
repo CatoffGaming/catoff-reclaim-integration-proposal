@@ -1,6 +1,7 @@
 const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse')
 
 exports.processUberData = async (proof, providerName) => {
+  console.log('here')
   const uberUsername = JSON.parse(proof[0].claimData.context)
     .extractedParameters.userName
 
