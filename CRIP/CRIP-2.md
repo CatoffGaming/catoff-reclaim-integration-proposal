@@ -51,19 +51,16 @@ exports.processLeetcodeData = async (proof, providerName) => {
   )
 }
 
-const getUserCommits = async username => {
-  const url = ` https://leetcode-api.p.rapidapi.com/user/${username}/solved`
+const getUserSolved = async username => {
+  const url = `https://leetcode-api.p.rapidapi.com/user/${username}/solved`
 
   const response = await axios.get(url, {
     headers: {
-      'x-rapidapi-key': '26277eb043msh10c976fe4eeaa86p1bfb00jsnf6bcc88587d1',
+      'x-rapidapi-key': `${process.env.X_API_KEY}`,
       'x-rapidapi-host': 'leetcode-api.p.rapidapi.com',
     },
   })
   console.log(response)
-  console.log(
-    `Total problems solved by ${username} : ${response.data.total_count}`
-  )
-  return response.data.total_count
+  return response
 }
 ```
