@@ -18,18 +18,17 @@ exports.processUberData = async (proof, providerName) => {
 }
 
 const getrideCounts = async username => {
-  const url = `https://riders.uber.com/trips-legacy?page=1`
+  const url = ` https://api.uber.com/v1/partners/trips`
   const ubertoken = process.env.RECLAIM_UBER_TOKEN
 
   const response = await axios.get(url, {
     headers: {
-      Accept: 'application/vnd.github.cloak-preview',
-      Authorization: `token ${ubertoken}`,
+      Authorization: `Bearer ${ubertoken}`,
     },
   })
 
   console.log(
     `Total rides by ${username} in the last 10 years: ${response.data.getTrips.count}`
   )
-  return response.data.getTrips.count
+  return response.data.count
 }
