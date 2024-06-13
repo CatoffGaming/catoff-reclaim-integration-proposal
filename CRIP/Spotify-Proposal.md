@@ -1,6 +1,6 @@
 | proposal | title              | description                   | author                     | discussions-to | status | type        | category | created    | requires |
 |----------|--------------------|-------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
-| CRIP-1   | Spotify Integration | Integration with Spotify API to showcase user Spotify activity | John Doe <john.doe@example.com> |                | Draft  | Integration | CRIP     | 2024-06-11 |          |
+| CRIP-1   | Spotify Integration | Integration with Spotify API to showcase user Spotify activity | Om Saxena omsaxena.137@gmail.com |                | Draft  | Integration | CRIP     | 2024-06-11 |          |
 
 ## Title
 
