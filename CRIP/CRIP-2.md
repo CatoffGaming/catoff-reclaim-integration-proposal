@@ -1,72 +1,100 @@
 | proposal | title                | description                    | author                     | discussions-to | status | type        | category | created    | requires |
 |----------|----------------------|--------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
-| CRIP-2   | YouTube Integration  | Integration with YouTube API to validate user activity | Jane Smith <jane.smith@example.com> |                | Draft  | Integration | CRIP     | 2024-06-20 |          |
+| CRIP-2   | YouTube Integration  | Integration with YouTube API to validate user engagement | Jane Smith <jane.smith@example.com> |                | Draft  | Integration | CRIP     | 2024-06-21 |          |
 
 ## Title
 
-YouTube Integration
+YouTube Engagement Integration
 
 ## Introduction
 
-This proposal outlines the integration of YouTube as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process user activity data from YouTube, such as video uploads and channel contributions, to be used within the Catoff platform. This will enable users to validate their YouTube contributions and use them for various challenges and verifications on Catoff.
+This proposal outlines the integration of YouTube as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process user engagement data from YouTube, such as time spent watching videos, liked videos, and subscriptions, to be used within the Catoff platform. This will enable users to validate their YouTube engagement and use it for various challenges and verifications on Catoff.
 
 ## External APIs Needed
 
 - YouTube Data API: https://developers.google.com/youtube/v3
+- YouTube Analytics API: https://developers.google.com/youtube/analytics
 
 ## Use Cases
 
-1. **User Verification**: Verify the activity of users on YouTube by checking their video uploads and contributions.
-2. **Challenge Participation**: Allow users to participate in challenges that require proof of YouTube activity.
-3. **Content Assessment**: Assess users' content creation skills and contributions based on their YouTube activity.
+1. **User Verification**: Verify the engagement of users on YouTube by checking their watch time, liked videos, and subscriptions.
+2. **Challenge Participation**: Allow users to participate in challenges that require proof of YouTube engagement.
+3. **Engagement Assessment**: Assess users' engagement with content on YouTube based on their activity.
 
 ## Data Provider
 
-- **Name**: YouTube Channel ID - Fix
-- **Hash Value**: 0x34d74a2815c6a7c91170b89d3a8dec3b54f4f21f0baf223e677b9134b41f2c12
+- **Name**: YouTube Engagement Data
+- **Hash Value**: 0x5b3e8d5e1238a7b92f8d1234567a8f4c5a6b7d8e9f0a1b2c3d4e5f6g7h8i9j0k
 
 ## Code Snippet
 
-Below is a code snippet that demonstrates the key parts of the YouTube integration. The full implementation should follow the service file template.
+Below is a code snippet that demonstrates the key parts of the YouTube integration for engagement data. The full implementation should follow the service file template.
 
-**`services/youtubeService.js`**
+**`services/youtubeEngagementService.js`**
 
 ```javascript
 const axios = require('axios')
 const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse')
 
-exports.processYouTubeData = async (proof, providerName) => {
-  const youtubeChannelId = JSON.parse(proof[0].claimData.context)
-    .extractedParameters.channelId
+exports.processYouTubeEngagementData = async (proof, providerName) => {
+  const userAccessToken = proof[0].claimData.context.accessToken
   const lastUpdateTimeStamp = proof[0].claimData.timestampS
 
-  const videoCount = await getUserVideos(youtubeChannelId)
+  const watchTime = await getUserWatchTime(userAccessToken)
+  const likedVideos = await getUserLikedVideos(userAccessToken)
+  const subscriptions = await getUserSubscriptions(userAccessToken)
 
   return new ReclaimServiceResponse(
     providerName,
     lastUpdateTimeStamp,
-    youtubeChannelId,
-    videoCount,
+    { watchTime, likedVideos, subscriptions },
     proof[0]
   )
 }
 
-const getUserVideos = async channelId => {
-  const url = `https://www.googleapis.com/youtube/v3/search?key=${process.env.YOUTUBE_API_KEY}&channelId=${channelId}&part=id&order=date&type=video`
-  const response = await axios.get(url)
+const getUserWatchTime = async accessToken => {
+  const url = `https://youtube.googleapis.com/youtube/v3/videos?part=statistics&myRating=like&key=${process.env.YOUTUBE_API_KEY}`
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  })
 
-  console.log(
-    `Total videos by channel ID ${channelId}: ${response.data.items.length}`
-  )
+  const totalWatchTime = response.data.items.reduce((acc, item) => acc + item.statistics.viewCount, 0)
+  console.log(`Total watch time: ${totalWatchTime}`)
+  return totalWatchTime
+}
+
+const getUserLikedVideos = async accessToken => {
+  const url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet&myRating=like&key=${process.env.YOUTUBE_API_KEY}`
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  })
+
+  console.log(`Total liked videos: ${response.data.items.length}`)
   return response.data.items.length
 }
 
+const getUserSubscriptions = async accessToken => {
+  const url = `https://youtube.googleapis.com/youtube/v3/subscriptions?part=snippet&mine=true&key=${process.env.YOUTUBE_API_KEY}`
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  })
+
+  console.log(`Total subscriptions: ${response.data.items.length}`)
+  return response.data.items.length
+}
 
 ## Explanation
 
-- **External APIs Needed**: The integration will use the YouTube Data API to fetch user activity data.
-- **Use Cases**: Three primary use cases are outlined for user verification, challenge participation, and content assessment.
+- **External APIs Needed**: The integration will use the YouTube Data API and YouTube Analytics API to fetch user engagement data.
+- **Use Cases**: Three primary use cases are outlined for user verification, challenge participation, and engagement assessment.
 - **Data Provider**: Details about the data provider are included, along with a unique hash value for identification.
-- **Code Snippet**: The code snippet includes functions for processing YouTube data and fetching the total number of videos uploaded by a channel.
+- **Code Snippet**: The code snippet includes functions for processing YouTube engagement data, including watch time, liked videos, and subscriptions.
 
-This proposed YouTube integration will allow the Catoff platform to validate user contributions on YouTube, facilitating various challenges and verifications.
+This proposed YouTube integration will allow the Catoff platform to validate user engagement on YouTube, facilitating various challenges and verifications.
+
