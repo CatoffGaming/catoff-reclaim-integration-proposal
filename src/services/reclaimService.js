@@ -8,6 +8,7 @@ const {
 } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
+const { processEtherscanData } = require('./etherscanService')
 
 exports.signWithProviderID = async (userId, tag) => {
   const providerName = RECLAIM_PROVIDER_NAME[tag]
@@ -49,7 +50,6 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
 
       try {
         let processedData
-        console.log('here')
         switch (providerName) {
           case 'TWITTER_ANALYTICS_VIEWS':
             processedData = await processTwitterData(proof, providerName)
@@ -57,8 +57,8 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
             break
-          case 'CODEFORCES_VERIFICATION':
-            processedData = await processCodeforcesData(proof, providerName)
+          case 'ETHERSCAN_VERIFICATION':
+            processedData = await processEtherscanData(proof, providerName)
             console.log(processedData)
             break
           default:

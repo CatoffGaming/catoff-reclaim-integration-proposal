@@ -1,10 +1,10 @@
 const { signWithProviderID } = require('../services/reclaimService')
 
 exports.signHandler = async (req, res) => {
-  const { userId, providerId } = req.body
+  const { userId, tag } = req.body
 
   try {
-    const signedUrl = await signWithProviderID(userId, providerId)
+    const signedUrl = await signWithProviderID(userId, tag)
     res.status(200).json({
       success: true,
       message: 'Reclaim signature successful',
