@@ -1,6 +1,6 @@
 | proposal | title                | description                    | author                     | discussions-to | status | type        | category | created    | requires |
 |----------|----------------------|--------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
-| CRIP-2   | YouTube Integration  | Integration with YouTube API to validate user engagement | Jane Smith <jane.smith@example.com> |                | Draft  | Integration | CRIP     | 2024-06-21 |          |
+| CRIP-2   | YouTube Integration  | Integration with YouTube API to validate user engagement | Ayush Pahuja <ayush.pahuja090.com> |                | Draft  | Integration | CRIP     | 2024-06-21 |          |
 
 ## Title
 
