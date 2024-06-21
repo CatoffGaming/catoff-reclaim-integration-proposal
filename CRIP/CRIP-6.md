@@ -1,6 +1,6 @@
 | proposal | title                  | description                                             | author                                     | discussions-to | status | type        | category | created    | requires |
 | -------- | ---------------------- | ------------------------------------------------------- | ------------------------------------------ | -------------- | ------ | ----------- | -------- | ---------- | -------- |
-| CRIP-2   | Codeforces Integration | Integration with Codeforces API to validate user rating | Rashid Mazhar <rashidmazhar0507@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
+| CRIP-6   | Codeforces Integration | Integration with Codeforces API to validate user rating | Rashid Mazhar <rashidmazhar0507@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
 
 ## Title
 
