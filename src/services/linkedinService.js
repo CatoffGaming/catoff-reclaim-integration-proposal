@@ -3,19 +3,19 @@ const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse');
 
 exports.processLinkedInData = async (proof, providerName) => {
   const extractedParameters = JSON.parse(proof[0].claimData.context).extractedParameters;
-  const followers = extractedParameters.Followers.replace(/,/g, '');
+  const searchAppearances = extractedParameters.Search_Appearances;
 
   const username = proof[0].claimData.owner;
 
-  console.log(`Followers for user ${username}: ${followers}`);
+  console.log(`Search Appearances for user ${username}: ${searchAppearances}`);
 
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
 
   return new ReclaimServiceResponse(
     providerName,
-    lastUpdateTimeStamp,
+    lastUpdateTimeStamp,                              
     username,
-    parseInt(followers, 10),
+    parseInt(searchAppearances, 10),
     proof[0]
   );
 };

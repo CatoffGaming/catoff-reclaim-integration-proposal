@@ -1,14 +1,14 @@
 | proposal | title               | description                     | author                          | discussions-to | status | type        | category | created    | requires |
 |----------|---------------------|---------------------------------|---------------------------------|----------------|--------|-------------|----------|------------|----------|
-| CRIP-LinkedIn   | LinkedIn Follower Count Integration | Integration with LinkedIn API to validate total followers on the account of user | Ritik Bhatt <ritikbhatt020@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-20 |          |
+| CRIP-LinkedIn   | LinkedIn Search Appearances Integration | Integration with LinkedIn API to validate total searches on the profile of a user | Ritik Bhatt <ritikbhatt020@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-20 |          |
 
 ## Title
 
-LinkedIn Follower Count Integration
+LinkedIn Search Appearances Integration
 
 ## Introduction
 
-This proposal outlines the integration of LinkedIn as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process total followers on the linkedin account of a user. This will enable users to validate their LinkedIn activities and use them for various challenges and verifications on Catoff.
+This proposal outlines the integration of LinkedIn as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process total searches by other users on the linkedin account of a user. This will enable users to validate their LinkedIn activities and use them for various challenges and verifications on Catoff.
 
 ## External APIs Needed
 
@@ -16,7 +16,7 @@ This proposal outlines the integration of LinkedIn as a data provider for the Ca
 
 ## Use Cases
 
-1. **User Verification**: Verify the activity of users on LinkedIn by checking the number of followers on their profile.
+1. **User Verification**: Verify the activity of users on LinkedIn by checking the number of searches on their profile.
 2. **Challenge Participation**: Allow users to participate in challenges that require proof of LinkedIn activity.
 3. **Professional Assessment**: Assess users' professional network and engagement based on their LinkedIn activity.
 
@@ -37,19 +37,19 @@ const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse');
 
 exports.processLinkedInData = async (proof, providerName) => {
   const extractedParameters = JSON.parse(proof[0].claimData.context).extractedParameters;
-  const followers = extractedParameters.Followers.replace(/,/g, '');
+  const searchAppearances = extractedParameters.Search_Appearances;
 
   const username = proof[0].claimData.owner;
 
-  console.log(`Followers for user ${username}: ${followers}`);
+  console.log(`Search Appearances for user ${username}: ${searchAppearances}`);
 
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
 
   return new ReclaimServiceResponse(
     providerName,
-    lastUpdateTimeStamp,
+    lastUpdateTimeStamp,                              
     username,
-    parseInt(followers, 10),
+    parseInt(searchAppearances, 10),
     proof[0]
   );
 };
