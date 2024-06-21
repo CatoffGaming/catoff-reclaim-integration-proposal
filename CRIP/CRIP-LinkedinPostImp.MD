@@ -1,14 +1,14 @@
 | proposal | title               | description                     | author                          | discussions-to | status | type        | category | created    | requires |
 |----------|---------------------|---------------------------------|---------------------------------|----------------|--------|-------------|----------|------------|----------|
-| CRIP-LinkedIn   | LinkedIn Integration | Integration with LinkedIn API to validate user connections and activities | Ritik Bhatt <ritikbhatt020@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-20 |          |
+| CRIP-LinkedIn   | LinkedIn Post Impressions Integration | Integration with LinkedIn API to validate impressions on Posts of user | Ritik Bhatt <ritikbhatt020@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-20 |          |
 
 ## Title
 
-LinkedIn Integration
+LinkedIn Post Impressions Integration
 
 ## Introduction
 
-This proposal outlines the integration of LinkedIn as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process user activity data from LinkedIn, such as connections, post impressions, profile views, and search appearances, to be used within the Catoff platform. This will enable users to validate their LinkedIn activities and use them for various challenges and verifications on Catoff.
+This proposal outlines the integration of LinkedIn as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process total impressions on the linkedin posts of a specific user. This will enable users to validate their LinkedIn activities and use them for various challenges and verifications on Catoff.
 
 ## External APIs Needed
 
@@ -16,7 +16,7 @@ This proposal outlines the integration of LinkedIn as a data provider for the Ca
 
 ## Use Cases
 
-1. **User Verification**: Verify the activity of users on LinkedIn by checking their connection count and other activities.
+1. **User Verification**: Verify the activity of users on LinkedIn by checking their post impressions and other activities.
 2. **Challenge Participation**: Allow users to participate in challenges that require proof of LinkedIn activity.
 3. **Professional Assessment**: Assess users' professional network and engagement based on their LinkedIn activity.
 
@@ -38,15 +38,10 @@ const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse');
 exports.processLinkedInData = async (proof, providerName) => {
   const extractedParameters = JSON.parse(proof[0].claimData.context).extractedParameters;
   const postImpressions = extractedParameters.Post_Impressions;
-  const profileViews = extractedParameters.Profile_Views;
-  const searchAppearances = extractedParameters.Search_Appearances;
-  const followers = extractedParameters.Followers.replace(/,/g, '');
+
   const username = proof[0].claimData.owner;
 
   console.log(`Post Impressions for user ${username}: ${postImpressions}`);
-  console.log(`Profile Views for user ${username}: ${profileViews}`);
-  console.log(`Search Appearances for user ${username}: ${searchAppearances}`);
-  console.log(`Followers for user ${username}: ${followers}`);
 
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
 
@@ -54,7 +49,7 @@ exports.processLinkedInData = async (proof, providerName) => {
     providerName,
     lastUpdateTimeStamp,
     username,
-    parseInt(followers, 10),
+    parseInt(postImpressions, 10),
     proof[0]
   );
 };
