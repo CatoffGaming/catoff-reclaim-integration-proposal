@@ -1,6 +1,6 @@
 | proposal | title                  | description                                             | author                                     | discussions-to | status | type        | category | created    | requires |
 | -------- | ---------------------- | ------------------------------------------------------- | ------------------------------------------ | -------------- | ------ | ----------- | -------- | ---------- | -------- |
-| CRIP-1   | Codeforces Integration | Integration with Codeforces API to validate user rating | Rashid Mazhar <rashidmazhar0507@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
+| CRIP-2   | Codeforces Integration | Integration with Codeforces API to validate user rating | Rashid Mazhar <rashidmazhar0507@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
 
 ## Title
 
@@ -23,7 +23,7 @@ This proposal outlines the integration of Codeforces as a data provider for the 
 ## Data Provider
 
 - **Name**: CFRating
-- **Hash Value**: 0xc2975a912a8a4366fca87a47da1d8c5882afdd247a80d665707106da2fe6a7bc
+- **Hash Value**: 0x99ec1be56026967afe1622990bc222236cccdac4c3d8406c7915cd729a58d709
 
 ## Code Snippet
 
