@@ -1,74 +1,83 @@
-| proposal | title              | description                   | author                     | discussions-to | status | type        | category | created    | requires |
-|----------|--------------------|-------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
-| CRIP-1   | GitHub Integration | Integration with GitHub API to validate user contributions | John Doe <john.doe@example.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
+| proposal | title                | description                                       | author                               | discussions-to | status | type        | category | created    | requires |
+| -------- | -------------------- | ------------------------------------------------- | ------------------------------------ | -------------- | ------ | ----------- | -------- | ---------- | -------- |
+| CRIP-1   | Duolingo Integration | Integration with Duolingo to validate user streak | Mudit Sarda <muditsarda23@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-21 |          |
 
 ## Title
 
-GitHub Integration
+Duolingo Integration for streak and XP check
 
 ## Introduction
 
-This proposal outlines the integration of GitHub as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process user activity data from GitHub, such as commit history and repository contributions, to be used within the Catoff platform. This will enable users to validate their GitHub contributions and use them for various challenges and verifications on Catoff.
+This proposal details the integration of Duolingo as a data provider for the Catoff-Reclaim project. The goal is to retrieve and process user activity data from Duolingo, focusing on metrics like streak lengths and total XP gains. This integration will allow users to validate their Duolingo achievements and participate in challenges and verifications on the Catoff platform.
 
 ## External APIs Needed
 
-- GitHub API: https://docs.github.com/en/rest
+- GitHub API: https://duolingo-api-roundeasy.vercel.app/
 
 ## Use Cases
 
-1. **User Verification**: Verify the activity of users on GitHub by checking their commit history and contributions.
-2. **Challenge Participation**: Allow users to participate in challenges that require proof of GitHub activity.
-3. **Skill Assessment**: Assess users' coding skills and contributions based on their GitHub activity.
+1. **Longest Streak Challenge**: Verify and compare users' longest consecutive daily streaks on Duolingo and motivate continuous daily practice among participants.
+2. **Total XP Gain Competition**: Track and reward the user with the highest XP gain over a specified period to encourage intensive engagement with lessons.
+3. **New Language Learning Race**: Monitor and compare participants' progress in learning a new language from scratch to achieve early learning milestones.
 
 ## Data Provider
 
-- **Name**: Github UserName - Fix
-- **Hash Value**: 0x68274d4815b6a7c91170c89d3a8cec3b54f4e21f0faf223e677a9134a31f2b32
+- **Name**: Duolingo - Languages and User details
+- **Hash Value**: 0xaa94b8255dce666531744555cde3ebeae7cac105f7437f158052f94ea86d4942
 
 ## Code Snippet
 
-Below is a code snippet that demonstrates the key parts of the GitHub integration. The full implementation should follow the service file template.
+Below is a code snippet that demonstrates the key parts of the Duolingo integration.
 
-**`services/githubService.js`**
+**`services/duolingoService.js`**
 
 ```javascript
-const axios = require('axios')
+// axios is not used because response could not be fetched by axios get method but by cURL.
+// uncomment the lines below and comment line 4, 15, 18, 27 to use Axios.
+
+// const axios = require('axios')
+const { execSync } = require('child_process')
 const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse')
 
-exports.processGitHubData = async (proof, providerName) => {
-  const githubUsername = JSON.parse(proof[0].claimData.context)
-    .extractedParameters.userName
-  const lastUpdateTimeStamp = proof[0].claimData.timestampS
+exports.processDuolingoStreak = async (proof, providerName) => {
+  try {
+    const duolingoUserId = JSON.parse(proof[0].claimData.context)
+      .extractedParameters.userId
 
-  const commitCount = await getUserCommits(githubUsername)
+    const lastUpdateTimeStamp = JSON.parse(proof[0].claimData.timestampS)
 
-  return new ReclaimServiceResponse(
-    providerName,
-    lastUpdateTimeStamp,
-    githubUsername,
-    commitCount,
-    proof[0]
-  )
-}
+    const duolingoUrl = `https://www.duolingo.com/2023-06-19/users/${duolingoUserId}`
+    const curlCommand = `curl -s ${duolingoUrl}`
+    // const response = await axios.get(duolingoUrl)
 
-const getUserCommits = async username => {
-  const daysAgo = 3650 // Approx. 10 years
-  const dateSince = new Date(new Date().setDate(new Date().getDate() - daysAgo))
-    .toISOString()
-    .split('T')[0]
-  const url = `https://api.github.com/search/commits?q=author:${username}+committer-date:>${dateSince}`
-  const githubToken = process.env.RECLAIM_GITHUB_TOKEN
+    const curlOutput = execSync(curlCommand, { encoding: 'utf-8' })
 
-  const response = await axios.get(url, {
-    headers: {
-      Accept: 'application/vnd.github.cloak-preview',
-      Authorization: `token ${githubToken}`,
-    },
-  })
+    // if (response.status !== 200) {
+    //   throw new Error(
+    //     `Failed to fetch data from Duolingo for userId: ${duolingoUserId}`
+    //   )
+    // }
 
-  console.log(
-    `Total commits by ${username} in the last 10 years: ${response.data.total_count}`
-  )
-  return response.data.total_count
+    // const userData = response.data
+    const userData = JSON.parse(curlOutput)
+
+    const username = userData?.username || 'Unknown'
+    const currentStreakLength = userData?.streak || 0
+
+    console.log(
+      `User ${username} has a current streak of ${currentStreakLength} days.`
+    )
+
+    return new ReclaimServiceResponse(
+      providerName,
+      lastUpdateTimeStamp,
+      username,
+      { streak: currentStreakLength },
+      proof[0]
+    )
+  } catch (error) {
+    console.log('Error processing Duolingo streak data', error)
+    throw error
+  }
 }
 ```
