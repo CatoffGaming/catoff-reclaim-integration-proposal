@@ -1,4 +1,3 @@
-// services/fitbitService.js
 const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse');
 const axios = require('axios');
 
