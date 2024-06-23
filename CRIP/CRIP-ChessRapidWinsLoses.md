@@ -1,14 +1,14 @@
 | proposal | title              | description                   | author                     | discussions-to | status | type        | category | created    | requires |
 |----------|--------------------|-------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
-| CRIP-ChessRapidRatings   | Chess.com Integration | Integration with Chess.com API to validate user ratings | Ritik Bhatt <ritikbhatt020@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
+| CRIP-ChessRapidWinsLoses   | Chess.com Integration | Integration with Chess.com API to validate wins and loses of a user in Chess.com Rapid format | Ritik Bhatt <ritikbhatt020@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
 
 ## Title
 
-Chess Rapid Current and Best Ratings Integration
+Chess Rapid Wins, Loses and Draws Integration
 
 ## Introduction
 
-This proposal outlines the integration of Chess.com as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process rapid ratings ie the best and current rating of a user in chess.com Rapid format to be used within the Catoff platform. This will enable users to validate their Chess.com performance and use it for various challenges and verifications on Catoff.
+This proposal outlines the integration of Chess.com as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process the wins, loses and draws of a user in chess.com Rapid format to be used within the Catoff platform. This will enable users to validate their Chess.com performance and use it for various challenges and verifications on Catoff.
 
 ## External APIs Needed
 
@@ -16,9 +16,9 @@ This proposal outlines the integration of Chess.com as a data provider for the C
 
 ## Use Cases
 
-1. **User Verification**: Verify the activity of users on Chess.com by checking their current and best ratings.
+1. **User Verification**: Verify the activity of users on Chess.com by checking their wins, loses and draws.
 2. **Challenge Participation**: Allow users to participate in challenges that require proof of Chess.com activity.
-3. **Skill Assessment**: Assess users' chess skills based on their rapid ratings and game history on Chess.com.
+3. **Skill Assessment**: Assess users' chess skills based on their win/loss ratio and game history on Chess.com.
 
 ## Data Provider
 
@@ -29,7 +29,7 @@ This proposal outlines the integration of Chess.com as a data provider for the C
 
 Below is a code snippet that demonstrates the key parts of the Chess.com integration. The full implementation should follow the service file template.
 
-**`services/chessRapidRatingsService.js`**
+**`services/chessRapidWinsLosesService.js`**
 
 ```javascript
 const axios = require('axios');
@@ -48,9 +48,10 @@ exports.processChessDotComData = async (proof, providerName) => {
 
     const { chess_rapid } = stats;
     
-    console.log('Chess Rapid Current and Best Ratings:');
-    console.log(`  Current Rating: ${chess_rapid?.last?.rating}`);
-    console.log(`  Best Rating: ${chess_rapid?.best?.rating}`);
+    console.log('Chess Rapid Wins, Loses and Draws:');
+    console.log(`  Wins: ${chess_rapid?.record?.win}`);
+    console.log(`  Losses: ${chess_rapid?.record?.loss}`);
+    console.log(`  Draws: ${chess_rapid?.record?.draw}`);
 
     const lastUpdateTimeStamp = proof[0].claimData.timestampS;
 
@@ -58,10 +59,7 @@ exports.processChessDotComData = async (proof, providerName) => {
       providerName,
       lastUpdateTimeStamp,
       username,
-      {
-        currentRating: chess_rapid?.last?.rating,
-        bestRating: chess_rapid?.best?.rating
-      },
+      stats,
       proof[0]
     );
   } catch (error) {

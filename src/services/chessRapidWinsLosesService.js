@@ -14,9 +14,10 @@ exports.processChessDotComData = async (proof, providerName) => {
 
     const { chess_rapid } = stats;
     
-    console.log('Chess Rapid Current and Best Ratings:');
-    console.log(`  Current Rating: ${chess_rapid?.last?.rating}`);
-    console.log(`  Best Rating: ${chess_rapid?.best?.rating}`);
+    console.log('Chess Rapid Wins, Loses and Draws:');
+    console.log(`  Wins: ${chess_rapid?.record?.win}`);
+    console.log(`  Losses: ${chess_rapid?.record?.loss}`);
+    console.log(`  Draws: ${chess_rapid?.record?.draw}`);
 
     const lastUpdateTimeStamp = proof[0].claimData.timestampS;
 
@@ -24,10 +25,7 @@ exports.processChessDotComData = async (proof, providerName) => {
       providerName,
       lastUpdateTimeStamp,
       username,
-      {
-        currentRating: chess_rapid?.last?.rating,
-        bestRating: chess_rapid?.best?.rating
-      },
+      stats,
       proof[0]
     );
   } catch (error) {
