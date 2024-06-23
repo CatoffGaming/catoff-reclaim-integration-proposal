@@ -1,9 +1,19 @@
-exports.RECLAIM_PROVIDER_ID = {
+exports.RECLAIM_PROVIDER_NAME = {
   twitter: 'TWITTER_ANALYTICS_VIEWS',
   github: 'GITHUB_ACCOUNT_VERIFICATION',
+  lichess: 'LICHESS_VERIFICATION',
 }
 
 exports.RECLAIM_APP_ID = {
   TWITTER_ANALYTICS_VIEWS: 'your-twitter-app-id',
   GITHUB_ACCOUNT_VERIFICATION: 'your-github-app-id',
+  LICHESS_VERIFICATION: 'your-lichess-app-id',
+}
+
+exports.RECLAIM_PROVIDER_ID = {
+  lichess: 'your-app-provider-id'
+}
+
+exports.RECLAIM_APP_SECRET = {
+  LICHESS_VERIFICATION_SECRET: '0xf02d001e7d9676cb422671420de325360988a49d8df75405c8c46b5969600994'
 }

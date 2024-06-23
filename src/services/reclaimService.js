@@ -1,13 +1,21 @@
 const axios = require('axios')
 const { Reclaim } = require('@reclaimprotocol/js-sdk')
-const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
+const {
+  RECLAIM_PROVIDER_ID,
+  RECLAIM_APP_ID,
+  RECLAIM_APP_SECRET,
+  RECLAIM_PROVIDER_NAME,
+} = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
+const { processLichessData } = require('./lichessService')
 
-exports.signWithProviderID = async (userId, providerId) => {
-  const providerName = RECLAIM_PROVIDER_ID[providerId]
+exports.signWithProviderID = async (userId, tag) => {
+  const providerName = RECLAIM_PROVIDER_NAME[tag]
+  const providerId = RECLAIM_PROVIDER_ID[tag]
   const reclaimAppID = RECLAIM_APP_ID[providerName]
-  const reclaimAppSecret = process.env[`${providerName}_SECRET`]
+  const reclaimAppSecret = RECLAIM_APP_SECRET[`${providerName}_SECRET`]
+  console.log(providerName, providerId, reclaimAppID, reclaimAppSecret)
 
   console.log(
     `Sending signature request to Reclaim for userId: ${userId} with providerName: ${providerName}`
@@ -48,6 +56,10 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
             break
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
+            break
+          case 'LICHESS_VERIFICATION':
+            processedData = await processLichessData(proof, providerName)
+            console.log(processedData)
             break
           default:
             throw new Error(`No handler for provider: ${providerName}`)
