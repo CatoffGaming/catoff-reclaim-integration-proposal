@@ -12,12 +12,12 @@ exports.processChessDotComData = async (proof, providerName) => {
     const response = await axios.get(apiUrl);
     const stats = response.data;
 
-    const { chess_rapid } = stats;
-    
-    console.log('Chess Rapid Wins, Loses and Draws:');
-    console.log(`  Wins: ${chess_rapid?.record?.win}`);
-    console.log(`  Losses: ${chess_rapid?.record?.loss}`);
-    console.log(`  Draws: ${chess_rapid?.record?.draw}`);
+    const { chess_bullet } = stats;
+
+    console.log('Chess Bullet Wins, Loses and Draws Stats:');
+    console.log(`  Wins: ${chess_bullet?.record?.win}`);
+    console.log(`  Losses: ${chess_bullet?.record?.loss}`);
+    console.log(`  Draws: ${chess_bullet?.record?.draw}`);
 
     const lastUpdateTimeStamp = proof[0].claimData.timestampS;
 
