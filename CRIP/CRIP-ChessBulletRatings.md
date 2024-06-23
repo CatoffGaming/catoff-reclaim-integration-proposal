@@ -1,14 +1,14 @@
 | proposal | title              | description                   | author                     | discussions-to | status | type        | category | created    | requires |
 |----------|--------------------|-------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
-| CRIP-ChessBulletWinsLoses   | Chess.com Integration | Integration with Chess.com API to validate wins and loses of a user in Chess.com Bullet format | Ritik Bhatt <ritikbhatt020@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
+| CRIP-ChessBulletRatings   | Chess.com Integration | Integration with Chess.com API to validate user ratings in Bullet format | Ritik Bhatt <ritikbhatt020@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
 
 ## Title
 
-Chess Bullet Wins, Loses and Draws Integration
+Chess Bullet Current and Best Ratings Integration
 
 ## Introduction
 
-This proposal outlines the integration of Chess.com as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process the wins, loses and draws of a user in chess.com Bullet format to be used within the Catoff platform. This will enable users to validate their Chess.com performance and use it for various challenges and verifications on Catoff.
+This proposal outlines the integration of Chess.com as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process bullet format ratings ie the best and current rating of a user in chess.com Bullet format to be used within the Catoff platform. This will enable users to validate their Chess.com performance and use it for various challenges and verifications on Catoff.
 
 ## External APIs Needed
 
@@ -16,9 +16,9 @@ This proposal outlines the integration of Chess.com as a data provider for the C
 
 ## Use Cases
 
-1. **User Verification**: Verify the activity of users on Chess.com by checking their wins, loses and draws in Bullet format.
+1. **User Verification**: Verify the activity of users on Chess.com by checking their current and best ratings.
 2. **Challenge Participation**: Allow users to participate in challenges that require proof of Chess.com activity.
-3. **Skill Assessment**: Assess users' chess skills based on their win/loss ratio and game history on Chess.com.
+3. **Skill Assessment**: Assess users' chess skills based on their bullet games ratings and game history on Chess.com.
 
 ## Data Provider
 
@@ -29,7 +29,7 @@ This proposal outlines the integration of Chess.com as a data provider for the C
 
 Below is a code snippet that demonstrates the key parts of the Chess.com integration. The full implementation should follow the service file template.
 
-**`services/chessBulletWinsLosesService.js`**
+**`services/chessBulletRatingsService.js`**
 
 ```javascript
 const axios = require('axios');
@@ -49,9 +49,8 @@ exports.processChessDotComData = async (proof, providerName) => {
     const { chess_bullet } = stats;
 
     console.log('Chess Bullet Wins, Loses and Draws Stats:');
-    console.log(`  Wins: ${chess_bullet?.record?.win}`);
-    console.log(`  Losses: ${chess_bullet?.record?.loss}`);
-    console.log(`  Draws: ${chess_bullet?.record?.draw}`);
+    console.log(`  Last Rating: ${chess_bullet?.last?.rating}`);
+    console.log(`  Best Rating: ${chess_bullet?.best?.rating}`);
 
     const lastUpdateTimeStamp = proof[0].claimData.timestampS;
 

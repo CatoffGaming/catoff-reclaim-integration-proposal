@@ -15,9 +15,8 @@ exports.processChessDotComData = async (proof, providerName) => {
     const { chess_bullet } = stats;
 
     console.log('Chess Bullet Wins, Loses and Draws Stats:');
-    console.log(`  Wins: ${chess_bullet?.record?.win}`);
-    console.log(`  Losses: ${chess_bullet?.record?.loss}`);
-    console.log(`  Draws: ${chess_bullet?.record?.draw}`);
+    console.log(`  Last Rating: ${chess_bullet?.last?.rating}`);
+    console.log(`  Best Rating: ${chess_bullet?.best?.rating}`);
 
     const lastUpdateTimeStamp = proof[0].claimData.timestampS;
 

@@ -3,7 +3,7 @@ const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
-const { processChessDotComData } = require('./chessBulletWinsLosesService')
+const { processChessDotComData } = require('./chessBulletRatingsService')
 
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
