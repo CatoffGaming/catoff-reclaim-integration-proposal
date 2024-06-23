@@ -1,6 +1,6 @@
 | proposal | title              | description                   | author                     | discussions-to | status | type        | category | created    | requires |
 |----------|--------------------|-------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
-| CRIP-ChessRapidWinsLoses   | Chess.com Integration | Integration with Chess.com API to validate wins and loses of a user in Chess.com Bullet format | Ritik Bhatt <ritikbhatt020@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
+| CRIP-ChessBulletWinsLoses   | Chess.com Integration | Integration with Chess.com API to validate wins and loses of a user in Chess.com Bullet format | Ritik Bhatt <ritikbhatt020@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
 
 ## Title
 
