@@ -1,6 +1,6 @@
 | proposal | title            | description                                      | author                                     | discussions-to | status | type        | category | created    | requires |
 | -------- | ---------------- | ------------------------------------------------ | ------------------------------------------ | -------------- | ------ | ----------- | -------- | ---------- | -------- |
-| CRIP-2   | Uber Integration | Integration with Uber API to validate uber rides | Rashid Mazhar <rashidmazhar0507@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
+| CRIP-7   | Uber Integration | Integration with Uber API to validate uber rides | Rashid Mazhar <rashidmazhar0507@gmail.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
 
 ## Title
 
