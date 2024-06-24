@@ -1,14 +1,25 @@
 const axios = require('axios')
+require('dotenv').config()
 const { Reclaim } = require('@reclaimprotocol/js-sdk')
-const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
+const {
+  RECLAIM_PROVIDER_ID,
+  RECLAIM_APP_ID,
+  RECLAIM_TAG_ID,
+  RECLAIM_SECRET,
+} = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
+const { processUberData } = require('./uberService')
 
-exports.signWithProviderID = async (userId, providerId) => {
-  const providerName = RECLAIM_PROVIDER_ID[providerId]
+exports.signWithProviderID = async (userId, tag) => {
+  const providerName = RECLAIM_TAG_ID[tag]
+  console.log(providerName)
   const reclaimAppID = RECLAIM_APP_ID[providerName]
-  const reclaimAppSecret = process.env[`${providerName}_SECRET`]
-
+  console.log(reclaimAppID)
+  const reclaimAppSecret = RECLAIM_SECRET[`${providerName}_SECRET`]
+  console.log(reclaimAppSecret)
+  const providerId = RECLAIM_PROVIDER_ID[tag]
+  console.log(providerId)
   console.log(
     `Sending signature request to Reclaim for userId: ${userId} with providerName: ${providerName}`
   )
@@ -48,6 +59,10 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
             break
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
+            break
+          case 'UBER_ACCOUNT_VERIFICATION':
+            console.log('here')
+            processedData = await processUberData(proof, providerName)
             break
           default:
             throw new Error(`No handler for provider: ${providerName}`)
