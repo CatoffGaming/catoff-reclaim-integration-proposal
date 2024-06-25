@@ -3,6 +3,7 @@ const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
+const { processMediumData } = require('./mediumService');
 
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
@@ -38,31 +39,34 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
     onSuccessCallback: async proof => {
       console.log(
         `Successful reclaim callback with proof: ${JSON.stringify(proof)}`
-      )
+      );
 
       try {
-        let processedData
+        let processedData;
         switch (providerName) {
           case 'TWITTER_ANALYTICS_VIEWS':
-            processedData = await processTwitterData(proof, providerName)
-            break
+            processedData = await processTwitterData(proof, providerName);
+            break;
           case 'GITHUB_ACCOUNT_VERIFICATION':
-            processedData = await processGitHubData(proof, providerName)
-            break
+            processedData = await processGitHubData(proof, providerName);
+            break;
+          case 'MEDIUM_PUBLICATIONS_VERIFICATION':
+            processedData = await processMediumData(proof, providerName);
+            break;
           default:
-            throw new Error(`No handler for provider: ${providerName}`)
+            throw new Error(`No handler for provider: ${providerName}`);
         }
 
-        console.log(`Processed data: ${JSON.stringify(processedData)}`)
+        console.log(`Processed data: ${JSON.stringify(processedData)}`);
       } catch (error) {
         console.error(
           `Failed to process Reclaim proof for userId: ${userId}`,
           error
-        )
+        );
       }
     },
     onFailureCallback: error => {
-      console.error(`Verification failed for userId: ${userId}`, error)
+      console.error(`Verification failed for userId: ${userId}`, error);
     },
-  })
-}
+  });
+};
