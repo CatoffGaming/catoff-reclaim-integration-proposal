@@ -1,8 +1,7 @@
 const axios = require('axios')
 const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
-const { processTwitterData } = require('./twitterService')
-const { processGitHubData } = require('./githubService')
+const { processDuolingoStreak } = require('./duolingoService')
 
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
@@ -41,19 +40,12 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
       )
 
       try {
-        let processedData
-        switch (providerName) {
-          case 'TWITTER_ANALYTICS_VIEWS':
-            processedData = await processTwitterData(proof, providerName)
-            break
-          case 'GITHUB_ACCOUNT_VERIFICATION':
-            processedData = await processGitHubData(proof, providerName)
-            break
-          default:
-            throw new Error(`No handler for provider: ${providerName}`)
+        if (providerName === 'DUOLINGO_STREAK') {
+          const processedData = await processDuolingoStreak(proof, providerName)
+          console.log(`Processed data: ${JSON.stringify(processedData)}`)
+        } else {
+          console.error(`No handler for provider: ${providerName}`)
         }
-
-        console.log(`Processed data: ${JSON.stringify(processedData)}`)
       } catch (error) {
         console.error(
           `Failed to process Reclaim proof for userId: ${userId}`,
