@@ -2,8 +2,11 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const reclaimController = require('./src/controllers/reclaimController')
 
+require('dotenv').config();
+
 const app = express()
 app.use(bodyParser.json())
+
 
 app.post('/reclaim/sign', reclaimController.signHandler)
 

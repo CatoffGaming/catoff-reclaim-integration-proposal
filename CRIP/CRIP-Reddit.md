@@ -4,7 +4,7 @@
 
 | proposal | title              | description                   | author                     | discussions-to | status | type        | category | created    | requires |
 |----------|--------------------|-------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
-| 001      | Reddit Post Karma Integration | Integration to track and verify Reddit post karma using Reclaim protocol | Aman Kumar Bairagi <amanbiragi1089@gmail.com> |                | Completed  | Integration | CRIP     | 2024-06-25 |          |
+| 001      | Reddit Post Karma Integration | Integration to track and verify Reddit post karma using Reclaim protocol | Aman Kumar Bairagi <amanbairagi1089@gmail.com> |                | Completed  | Integration | CRIP     | 2024-06-25 |          |
 
 ## Title
 

@@ -9,8 +9,6 @@ exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
   const reclaimAppID = RECLAIM_APP_ID[providerName]
   const reclaimAppSecret = process.env[`${providerName}_SECRET`]
-  console.log(providerName);
-  console.log(reclaimAppSecret);
 
   console.log(
     `Sending signature request to Reclaim for userId: ${userId} with providerName: ${providerName}`
