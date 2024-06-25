@@ -1,3 +1,15 @@
+/* To test, install 'jest' using the command:
+ 'npm install --save-dev jest' 
+ and add the following code in 'scripts' section of 'package.json':
+ {
+  "scripts": {
+    "test": "jest"
+  }
+ }
+ and run the test unsing the command:
+ 'npm test'
+*/
+
 const { exec } = require('child_process')
 const { processDuolingoStreak } = require('../src/services/duolingoService')
 const {
