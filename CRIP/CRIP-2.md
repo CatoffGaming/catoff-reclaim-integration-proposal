@@ -1,32 +1,28 @@
 | proposal | title                       | description                                           | author                     | discussions-to | status | type        | category | created    | requires |
 |----------|-----------------------------|-------------------------------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
-| 2        | Fitness Tracker Integration | Integrate fitness tracking data to verify health goals | Your Name <Your Email>     |                | Draft  | Integration | CRIP     | 2024-06-22 |          |
+| 2        | Fitbit Integration | Integrate Fitbit profile data into the Reclaim protocol for Catoff | Furqan Ahmad Khan <furqankhan5403@gmail.com>     |                | Draft  | Integration | CRIP     | 2024-06-27 |          |
 
 ## Title
 Fitness Tracker Integration
 
 ## Introduction
-This proposal aims to integrate Fitbit data into the Reclaim protocol for use within the Catoff platform. The integration will allow users to verify their fitness activities, such as step counts, heart rates, and sleep data, using zero-knowledge proofs generated from Fitbit data.
+This proposal aims to integrate Fitbit profile data into the Catoff platform using the Reclaim Protocol. This integration will allow users to verify their personal health information, such as age, full name, weight, height, timezone, date of birth, email, and membership date, while maintaining their privacy.
 
 ## External APIs Needed
-- Steps: https://api.fitbit.com/1/user/-/activities/steps/date/today/1w.json
-- Heart Rate: https://api.fitbit.com/1/user/-/activities/heart/date/today/1w.json
-- Sleep: https://api.fitbit.com/1.2/user/-/sleep/date/today/1w.json
-- distanceData: https://api.fitbit.com/1/user/-/activities/distance/date/today/1w.json
-- caloriesData: https://api.fitbit.com/1/user/-/activities/calories/date/today/1w.json
+- profile data = https://api.fitbit.com/1/user/-/profile.json
 <!-- (Future Integrations: Apple Health API, Google Fit API) -->
 
 ## Use Cases
-- Users can verify their daily or weekly step counts to participate in fitness challenges or to show their physical activity levels for health-related rewards.
-- Users can provide proof of their heart rate data over a period to demonstrate compliance with fitness or health monitoring programs.
-- Users can verify their sleep patterns and quality to participate in wellness programs or to provide evidence for health improvement incentives.
+- **Personal Data Verification**: Users can verify their personal health information (age, full name, weight, height, timezone, date of birth, email, and membership date) to participate in various challenges and bets on the Catoff platform.
+- **Age-Restricted Challenges**: Users can verify their age using Fitbit data to participate in age-restricted challenges or wagers.
+- **Health Profile Verification**: Users can provide proof of their health profile to participate in health-related challenges or to earn rewards for maintaining a healthy lifestyle.
 <!-- - Users can place bets on achieving daily step goals.
 - Users can challenge each other to run a certain distance within a week.
 - Users can verify their calorie burn goals to earn rewards. -->
 
 ## Data Provider
-- **Name**: Fitbit API Provider(needs to be created new provider for this)
-- **Hash Value**: <Hash Value from Reclaim Website>
+- **Name**: FitBit Profile Data
+- **Hash Value**: 0x7207ccde281fad484a3fe2ac1a5d0b2d3d57664861c09ff8a1bc452db47a2adc
 
 ## Code Snippet
 
@@ -35,35 +31,31 @@ This proposal aims to integrate Fitbit data into the Reclaim protocol for use wi
 const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse');
 const axios = require('axios');
 
-const fetchFitbitData = async (url, token) => {
-  const response = await axios.get(url, {
+const fetchFitbitProfile = async (token) => {
+  const response = await axios.get('https://api.fitbit.com/1/user/-/profile.json', {
     headers: { 'Authorization': `Bearer ${token}` }
   });
-  return response.data;
+  return response.data.user;
 };
 
 exports.processFitnessData = async (proof, providerName) => {
   const token = proof[0].claimData.context.accessToken;
 
-  // Fetch fitness data from Fitbit API
-  const stepData = await fetchFitbitData('https://api.fitbit.com/1/user/-/activities/steps/date/today/1w.json', token);
-  const heartRateData = await fetchFitbitData('https://api.fitbit.com/1/user/-/activities/heart/date/today/1w.json', token);
-  const sleepData = await fetchFitbitData('https://api.fitbit.com/1.2/user/-/sleep/date/today/1w.json', token);
+  // Fetch profile data from Fitbit API
+  const profileData = await fetchFitbitProfile(token);
 
-  // Process the fetched data
-  const steps = stepData['activities-steps'];
-  const heartRates = heartRateData['activities-heart'];
-  const sleep = sleepData['sleep'];
-
-  const lastUpdateTimeStamp = new Date().toISOString();
-
-  // Create the processed data object
+  // Extract relevant data
   const processedData = {
-    steps,
-    heartRates,
-    sleep
+    age: profileData.age,
+    fullName: profileData.fullName,
+    weight: profileData.weight,
+    height: profileData.height,
+    timezone: profileData.timezone,
+    dateOfBirth: profileData.dateOfBirth,
+    email: profileData.email,
+    memberSince: profileData.memberSince,
   };
 
-  // Create and return a ReclaimServiceResponse object
+  const lastUpdateTimeStamp = new Date().toISOString();
   return new ReclaimServiceResponse(providerName, lastUpdateTimeStamp, null, processedData, proof[0]);
 };
