@@ -1,40 +1,33 @@
 const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse');
 const axios = require('axios');
 
-const fetchFitbitData = async (url, token) => {
-  const response = await axios.get(url, {
+const fetchFitbitProfile = async (token) => {
+  const response = await axios.get('https://api.fitbit.com/1/user/-/profile.json', {
     headers: { 'Authorization': `Bearer ${token}` }
   });
-  return response.data;
+  return response.data.user;
 };
 
 exports.processFitnessData = async (proof, providerName) => {
   const token = proof[0].claimData.context.accessToken;
 
-  const stepData = await fetchFitbitData('https://api.fitbit.com/1/user/-/activities/steps/date/today/1w.json', token);
-  const heartRateData = await fetchFitbitData('https://api.fitbit.com/1/user/-/activities/heart/date/today/1w.json', token);
-  const sleepData = await fetchFitbitData('https://api.fitbit.com/1.2/user/-/sleep/date/today/1w.json', token);
-  const distanceData = await fetchFitbitData('https://api.fitbit.com/1/user/-/activities/distance/date/today/1w.json', token);
-  const caloriesData = await fetchFitbitData('https://api.fitbit.com/1/user/-/activities/calories/date/today/1w.json', token);
+  // Fetch profile data from Fitbit API
+  const profileData = await fetchFitbitProfile(token);
 
-
-  const steps = stepData['activities-steps'];
-  const heartRates = heartRateData['activities-heart'];
-  const sleep = sleepData['sleep'];
-  const distances = distanceData['activities-distance'];
-  const calories = caloriesData['activities-calories'];
+  // Extract relevant data
+  const processedData = {
+    age: profileData.age,
+    fullName: profileData.fullName,
+    weight: profileData.weight,
+    height: profileData.height,
+    timezone: profileData.timezone,
+    dateOfBirth: profileData.dateOfBirth,
+    email: profileData.email,
+    memberSince: profileData.memberSince,
+  };
 
   const lastUpdateTimeStamp = new Date().toISOString();
 
-  // Process and structure data as needed
-  const processedData = {
-    steps,
-    heartRates,
-    sleep,
-    distances,
-    calories
-  };
-
-  // Create ReclaimServiceResponse object with the processed data
+  // Create and return a ReclaimServiceResponse object
   return new ReclaimServiceResponse(providerName, lastUpdateTimeStamp, null, processedData, proof[0]);
 };
