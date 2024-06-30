@@ -1,6 +1,6 @@
 | proposal | title              | description                   | author                     | discussions-to | status | type        | category | created    | requires |
 |----------|--------------------|-------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
-| CRIP-smallcase   | SmallCase Integration | Integration with Smallcase API to validate user total returns on their investments and their networth. | Basit Raza <basitraza2000@gmail.com@gmail.com> |         | Draft  | Integration | CRIP     | 2024-06-30 |          |
+| CRIP-smallcase   | SmallCase Integration | Integration with Smallcase API to validate user total returns on their investments and their networth. | Basit Raza <basitraza2000@gmail.com |         | Draft  | Integration | CRIP     | 2024-06-30 |          |
 
 ## Title
 
@@ -8,7 +8,7 @@ SmallCase Integration
 
 ## Introduction
 
-This proposal outlines the integration of Smallcase returns & Networth Via smallcase  as  data providers for the Catoff-Reclaim integration project. The integration can be used with both the smallcase data providors and aims to retrieve total aggregate returns and total networth on their investment Portfolio . This will enable users to validate their networth and returns on their investments and use it for various challenges and verifications across the Catoff platform.
+This proposal outlines the integration of Smallcase returns & Networth Via smallcase  as  data providers for the Catoff-Reclaim integration project. The integration can be used with both the smallcase data providors and aims to retrieve total aggregate returns and total networth of their investment Portfolio . This will enable users to validate their networth and returns of their investments and use it for various challenges and verifications across the Catoff platform.
 
 ## External APIs Needed
 
