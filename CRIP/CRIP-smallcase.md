@@ -24,10 +24,12 @@ This proposal outlines the integration of Smallcase returns & Networth Via small
 ## Data Providers
 
 - **Name**: Smallcase returns
-- **Provider Id**: 72569723-4e63-440d-84f6-0f9d8cae932b
+- **Hash Value**: 0xb490b0e1580609e96de8c034ce570c2787de0f8eca4bf99c8991ce001741a2f7
+
+
 
 - **Name**: Networth Via smallcase
-- **Provider Id**: b038f282-95ec-4553-9131-584be48dda78
+- **Hash Value**: 0x775178a84f61e94419c2698a15a1018a0220b2893ebc606a70febd7ce77ee0e1
 
 
 ## Code Snippet
