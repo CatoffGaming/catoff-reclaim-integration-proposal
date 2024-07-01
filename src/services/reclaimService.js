@@ -3,6 +3,7 @@ const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
+const { processSmallcaseData } = require('./smallCaseService')
 
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
@@ -48,6 +49,12 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
             break
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
+            break
+          case 'SMALLCASE_RETURNS':
+            processedData = await processSmallcaseData(proof, providerName)
+            break
+          case 'NETWORTH_VIA_SMALLCASE':
+            processedData = await processSmallcaseData(proof, providerName)
             break
           default:
             throw new Error(`No handler for provider: ${providerName}`)
