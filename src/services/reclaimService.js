@@ -3,7 +3,8 @@ const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
-
+const { processLumaEventData } = require('./lumaService');
+const {processWakatimeData} = require('./wakatimeservice');
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
   const reclaimAppID = RECLAIM_APP_ID[providerName]
@@ -49,6 +50,12 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
             break
+          case 'LUMA_SERVICE':
+            processedData = await processLumaEventData(proof, providerName);
+            break;
+          case 'WAKA_TIME_SERVICE':
+              processedData = await processWakatimeData(proof, providerName,userId);
+              break  
           default:
             throw new Error(`No handler for provider: ${providerName}`)
         }
