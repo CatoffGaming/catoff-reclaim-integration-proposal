@@ -50,7 +50,7 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
             break
-          case 'FITBIT_SERVICE': 
+          case 'FITBIT_SERVICE':  //add your service case
           processedData = await processFitnessData(proof, providerName);
             break
           default:

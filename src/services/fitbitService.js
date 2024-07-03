@@ -9,7 +9,7 @@ const fetchFitbitProfile = async (token) => {
 };
 
 exports.processFitnessData = async (proof, providerName) => {
-  const token = proof[0].claimData.context.accessToken;
+  const token = JSON.parse(proof[0].claimData.context).extractedParameters.accessToken;
 
   // Fetch profile data from Fitbit API
   const profileData = await fetchFitbitProfile(token);
@@ -26,7 +26,7 @@ exports.processFitnessData = async (proof, providerName) => {
     memberSince: profileData.memberSince,
   };
 
-  const lastUpdateTimeStamp = new Date().toISOString();
+  const lastUpdateTimeStamp = JSON.parse(proof[0].claimData.timestampS)
 
   // Create and return a ReclaimServiceResponse object
   return new ReclaimServiceResponse(providerName, lastUpdateTimeStamp, null, processedData, proof[0]);
