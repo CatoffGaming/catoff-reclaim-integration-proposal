@@ -3,6 +3,8 @@ const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
+const { processSteamData } = require('./steamService')
+require('dotenv').config()
 
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
@@ -21,7 +23,7 @@ exports.signWithProviderID = async (userId, providerId) => {
     )
     const { requestUrl: signedUrl } =
       await reclaimClient.createVerificationRequest()
-
+    console.log(signedUrl, " SIGNED URL")
     await handleReclaimSession(userId, reclaimClient, providerName)
     return signedUrl
   } catch (error) {
@@ -48,6 +50,9 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
             break
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
+            break
+          case 'STEAM_ID':
+            processedData = await processSteamData(proof, providerName)
             break
           default:
             throw new Error(`No handler for provider: ${providerName}`)
