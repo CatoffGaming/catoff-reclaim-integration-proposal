@@ -1,6 +1,6 @@
 | proposal | title              | description                                                | author                          | discussions-to | status | type        | category | created    | requires |
 | -------- | ------------------ | ---------------------------------------------------------- | ------------------------------- | -------------- | ------ | ----------- | -------- | ---------- | -------- |
-| CRIP-2   | Steam ID Integration | Integration with Steam to ret | John Doe <john.doe@example.com> |                | Draft  | Integration | CRIP     | 2024-06-01 |          |
+| CRIP-2   | Steam ID Integration | Integration with Steam to ret | Ankit Singh <akashthakur70423@gmail.com> |                | Draft  | Integration | CRIP     | 2024-07-04 |          |
 
 ## Title
 
