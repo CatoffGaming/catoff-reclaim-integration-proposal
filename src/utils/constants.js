@@ -1,11 +1,11 @@
 exports.RECLAIM_PROVIDER_ID = {
   twitter: 'TWITTER_ANALYTICS_VIEWS',
   github: 'GITHUB_ACCOUNT_VERIFICATION',
-  "1bba104c-f7e3-4b58-8b42-f8c0346cdeab": 'STEAM_ID',
+  STEAM_ID: 'STEAM_ID',
 }
 
 exports.RECLAIM_APP_ID = {
   TWITTER_ANALYTICS_VIEWS: 'your-twitter-app-id',
   GITHUB_ACCOUNT_VERIFICATION: 'your-github-app-id',
-  STEAM_ID: '0x58A7Ad9be91BB6E8E5a09bB031688388DC83a915',
+  STEAM_ID: 'your-steam-app-id',
 }

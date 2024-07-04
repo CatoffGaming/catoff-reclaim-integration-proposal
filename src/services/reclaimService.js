@@ -23,7 +23,6 @@ exports.signWithProviderID = async (userId, providerId) => {
     )
     const { requestUrl: signedUrl } =
       await reclaimClient.createVerificationRequest()
-    console.log(signedUrl, " SIGNED URL")
     await handleReclaimSession(userId, reclaimClient, providerName)
     return signedUrl
   } catch (error) {
