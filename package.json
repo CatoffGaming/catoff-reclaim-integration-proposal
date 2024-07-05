@@ -4,7 +4,7 @@
   "description": "CRIP is an open source project to receieve community proposals for catoff challenges which are based on reclaim integration",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node --env-file=.env index.js ",
     "lint": "eslint '**/*.js'",
     "lint:fix": "eslint '**/*.js' --fix",
     "format": "prettier --write '**/*.js'"
