@@ -8,7 +8,7 @@ Monkeytype Integration
 
 ## Introduction
 
-This proposal outlines the integration of monkeytype as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process user top typing speed data of 15 seconds from monkeytype, such as WPM,Accuracy and Time of achivement, to be used within the Catoff platform. This will enable users to validate their typing speed and use them for various challenges and verifications on Catoff.
+This proposal outlines the integration of monkeytype as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process user top typing speed data of 15 seconds from monkeytype, such as username, WPM,Accuracy and Time of achivement to be used within the Catoff platform. This will enable users to validate their typing speed and use them for various challenges and verifications on Catoff.
 
 ## External APIs Needed
 
