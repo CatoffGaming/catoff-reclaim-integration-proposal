@@ -2,14 +2,14 @@ const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse')
 
 exports.processMonkeyTypeData = async (proof, providerName) => {
   // Extract relevant data from the proof
-  const wpm = JSON.parse(proof[0].claimData.context).extractedParameters.wpm15s
+  const wpm = JSON.parse(proof[0].claimData.context).extractedParameters.wpm
   const acc = JSON.parse(proof[0].claimData.context).extractedParameters.acc
-  const completionTime = JSON.parse(proof[0].claimData.context)
+  const timeStamp = JSON.parse(proof[0].claimData.context)
     .extractedParameters.completionTime
   const username = JSON.parse(proof[0].claimData.context).extractedParameters
     .username
 
-  const date = new Date(Number(completionTime))
+  const date = new Date(Number(timeStamp))
   // Options for formatting timestamp
   const options = {
     year: 'numeric',
@@ -22,11 +22,13 @@ exports.processMonkeyTypeData = async (proof, providerName) => {
   }
 
   // Format the date and time
-  const formattedDate = date.toLocaleString('en-US', options)
-  const ProcessedData = {
+  const completionTime = date.toLocaleString('en-US', options)
+  // The complete processedData from monkeyType
+  const ProcessedData = { 
+    providerName,
     wpm,
     acc,
-    formattedDate,
+    completionTime,
     username,
   }
   const lastUpdateTimeStamp = JSON.parse(proof[0].claimData.timestampS)
