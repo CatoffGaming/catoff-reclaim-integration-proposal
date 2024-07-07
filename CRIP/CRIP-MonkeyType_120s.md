@@ -1,6 +1,6 @@
 | proposal | title              | description                   | author                     | discussions-to | status | type        | category | created    | requires |
 |----------|--------------------|-------------------------------|----------------------------|----------------|--------|-------------|----------|------------|----------|
-| CRIP-2   | Monkeytype Integration | Integration with MonekeyType to get users typing speed in 60 sec | Ashwin KV <ashwinkv.akv@gmail.com> |                | Draft  | Integration | CRIP     | 2024-07-07 |          |
+| CRIP-2   | Monkeytype Integration | Integration with MonekeyType to get users typing speed in 120 sec | Ashwin KV <ashwinkv.akv@gmail.com> |                | Draft  | Integration | CRIP     | 2024-07-07 |          |
 
 ## Title
 
@@ -8,7 +8,7 @@ Monkeytype Integration 60s
 
 ## Introduction
 
-This proposal outlines the integration of monkeytype as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process user top typing speed data of 60 seconds from monkeytype, such as username, WPM,Accuracy and Time of achivement to be used within the Catoff platform. This will enable users to validate their typing speed and use them for various challenges and verifications on Catoff.
+This proposal outlines the integration of monkeytype as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process user top typing speed data of 120 seconds from monkeytype, such as username, WPM,Accuracy and Time of achivement to be used within the Catoff platform. This will enable users to validate their typing speed and use them for various challenges and verifications on Catoff.
 
 ## External APIs Needed
 
@@ -24,8 +24,8 @@ This proposal outlines the integration of monkeytype as a data provider for the 
 
 ## Data Provider
 
-- **Name**: Monkeytype 60 sec data
-- **Hash Value**: 0x3904d64f3f1ce330bcd893fbaf9cf6ab94e58e3b22a200099f73a156bad646b7
+- **Name**: Monkeytype 120 sec data
+- **Hash Value**: 0x059fe3942bf736c935700846a1b71ca91b93bdaaa65b37ea0d06834c90ee16b3
 
 ## Code Snippet
 

@@ -25,7 +25,7 @@ This proposal outlines the integration of monkeytype as a data provider for the 
 ## Data Provider
 
 - **Name**: Monkeytype 30 sec data
-- **Hash Value**: 0x604f5228860b144b6e63ff47e541c1419b38d119cc3828a917dd9966dc7bb3a1
+- **Hash Value**: 0x12bfd8a194c63765e7dc5aa47d74114f812f26652bf8cae1b0677d2ad471815e
 
 ## Code Snippet
 

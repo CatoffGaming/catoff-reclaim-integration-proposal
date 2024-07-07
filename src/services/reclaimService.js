@@ -59,6 +59,9 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
           case 'MONKEY_TYPE_SPEED_60S':
             processedData = await processMonkeyTypeData(proof, providerName)
             break
+          case 'MONKEY_TYPE_SPEED_120S':
+            processedData = await processMonkeyTypeData(proof, providerName)
+            break
           default:
             throw new Error(`No handler for provider: ${providerName}`)
         }
