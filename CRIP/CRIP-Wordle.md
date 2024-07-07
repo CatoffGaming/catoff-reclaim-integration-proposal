@@ -26,3 +26,39 @@ This proposal outlines the integration of Wordle as a data provider for the Cato
 
 - **Name**: Wordle Stats
 - **Hash Value**: 0x9302f8ff496a87eb95982887c18e27ac35d8926c9b1a98db94263c7f5c3de4c9
+
+## Code Snippet
+
+Below is a code snippet that demonstrates the key parts of the Wordle integration.
+
+**`services/wordleService.js`**
+
+```javascript
+const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse')
+
+exports.processWordleData = async (proof, providerName) => {
+  const userStatsExtracted = JSON.parse(
+    proof[0].claimData.context
+  ).extractedParameters
+
+  const userStats = {
+    gamesPlayed: userStatsExtracted.gamesPlayed,
+    currentStreak: userStatsExtracted.currentStreak,
+    gamesWon: userStatsExtracted.gamesWon,
+    maxStreak: userStatsExtracted.maxStreak,
+  }
+
+  const lastUpdateTimeStamp = JSON.parse(proof[0].claimData.timestampS)
+
+  // Wordle does not provider username
+  const username = null
+
+  return new ReclaimServiceResponse(
+    providerName,
+    lastUpdateTimeStamp,
+    username,
+    userStats,
+    proof[0]
+  )
+}
+```
