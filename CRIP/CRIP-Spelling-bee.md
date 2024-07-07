@@ -24,3 +24,39 @@ This proposal outlines the integration of daily puzzles into the Catoff platform
 
 - **Name**: Spelling Bee Stats
 - **Hash Value**: 0x4a38917946919df457dab21b2b5cc927ea8a04dfb35c98833dce4c0a3b66eccb
+
+## Code Snippet
+
+Below is a code snippet that demonstrates the key parts of the Spelling Bee integration.
+
+**`services/spellingBeeService.js`**
+
+```javascript
+const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse')
+
+exports.processSpellingBeeData = async (proof, providerName) => {
+  const userStatsExtracted = JSON.parse(
+    proof[0].claimData.context
+  ).extractedParameters
+
+  const userStats = {
+    longestWord: userStatsExtracted.longest_word,
+    puzzlesStarted: userStatsExtracted.puzzles_started,
+    totalPangrams: userStatsExtracted.total_pangrams,
+    totalWords: userStatsExtracted.total_words,
+  }
+
+  const lastUpdateTimeStamp = JSON.parse(proof[0].claimData.timestampS)
+
+  // Spelling bee does not provider username
+  const username = userStatsExtracted.user_id
+
+  return new ReclaimServiceResponse(
+    providerName,
+    lastUpdateTimeStamp,
+    username,
+    userStats,
+    proof[0]
+  )
+}
+```
