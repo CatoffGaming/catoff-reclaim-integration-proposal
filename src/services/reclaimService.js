@@ -3,7 +3,7 @@ const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
-const { processSwiggyData } = require('./SwiggyLastOrderService')
+const { processZomatoData } = require('./ZomatoTotalOrdersService')
 
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
@@ -14,11 +14,11 @@ exports.signWithProviderID = async (userId, providerId) => {
     `Sending signature request to Reclaim for userId: ${userId} with providerName: ${providerName}`
   )
 
-  try {
-    const reclaimClient = new Reclaim.ProofRequest('0xaDdbcC95cC89e0F2eE1beFefD9DEF259FD9F9A28')
-    await reclaimClient.buildProofRequest('b5614a05-ba19-49c3-a312-250e85fabc55')
+  try {         
+    const reclaimClient = new Reclaim.ProofRequest('0xD2bD98049dE5B8b4AD1BD2643a85992e13E4bf34')
+    await reclaimClient.buildProofRequest('6cadc27b-72cd-4c12-87de-9198fd24456e')
     reclaimClient.setSignature(
-      await reclaimClient.generateSignature('0x428658c44b8b3ac201725fb31e7d15123765527d60b7cdffc87843a2659c0e90')
+      await reclaimClient.generateSignature('0xca30be77c4c2d796fab31489ba7b4388e87377df92621b4505986efd45e7a656')
     )
     const { requestUrl: signedUrl } =
       await reclaimClient.createVerificationRequest()
@@ -51,8 +51,8 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
             break
-          case 'SWIGGY_ACCOUNT_VERIFICATION':
-            processedData = await processSwiggyData(proof, providerName);
+          case 'ZOMATO_ACCOUNT_VERIFICATION':
+            processedData = await processZomatoData(proof, providerName);
             break
           default:
             throw new Error(`No handler for provider: ${providerName}`)

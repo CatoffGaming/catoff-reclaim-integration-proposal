@@ -1,19 +1,19 @@
 const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse');
 
-exports.processSwiggyData = async (proof, providerName) => {
+exports.processZomatoData = async (proof, providerName) => {
   console.log("Proof is: ", proof[0]);
 
   const extractedParameters = JSON.parse(proof[0].claimData.context).extractedParameters;
-  const lastOrderPrice = extractedParameters.lastOrderPrice;
+  const numberOfOrders = extractedParameters.ordersCount;
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
 
-  console.log('Last Order Price is: ', lastOrderPrice);
+  console.log('Total Number of orders are: ', numberOfOrders);
 
   return new ReclaimServiceResponse(
     providerName,
     lastUpdateTimeStamp,
     'username', 
-    lastOrderPrice,
+    numberOfOrders,
     proof[0]
   );
 };
