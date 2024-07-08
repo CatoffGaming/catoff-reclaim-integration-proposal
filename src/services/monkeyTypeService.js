@@ -2,12 +2,12 @@ const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse')
 
 exports.processMonkeyTypeData = async (proof, providerName) => {
   // Extract relevant data from the proof
-  const wpm = JSON.parse(proof[0].claimData.context).extractedParameters.wpm
-  const acc = JSON.parse(proof[0].claimData.context).extractedParameters.acc
+  const wpm = JSON.parse(proof[0].claimData.context).extractedParameters.wpm // word per minutes speed of the test
+  const acc = JSON.parse(proof[0].claimData.context).extractedParameters.acc // accuracy for the test
   const timeStamp = JSON.parse(proof[0].claimData.context)
-    .extractedParameters.completionTime
+    .extractedParameters.completionTime // completion time of the test
   const username = JSON.parse(proof[0].claimData.context).extractedParameters
-    .username
+    .username //username of the proof
 
   const date = new Date(Number(timeStamp))
   // Options for formatting timestamp
