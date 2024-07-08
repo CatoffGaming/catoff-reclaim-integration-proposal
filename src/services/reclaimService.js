@@ -48,20 +48,7 @@ exports.signWithProviderID = async (userId, providerId) => {
 }
 
 const handleReclaimSession = async (userId, reclaimClient, providerName) => {
-  ////////////
-     await reclaimClient.startSession({
-      onSuccessCallback: proof => {
-        console.log('Verification success', proof)
-        // Your business logic here
-      },
-      onFailureCallback: error => {
-        console.error('Verification failed', error)
-        // Your business logic here to handle the error
-      }
-    })
-    //console.log("ll: ",t)
-  console.log("one :",reclaimClient);
-  ///////////////////////////////////////////////////////
+  
   await reclaimClient.startSession({
     
     onSuccessCallback: async proof => {
