@@ -2,6 +2,7 @@ const { signWithProviderID } = require('../services/reclaimService')
 
 exports.signHandler = async (req, res) => {
   const { userId, providerId } = req.body
+  console.log(req.body);
 
   try {
     const signedUrl = await signWithProviderID(userId, providerId)
