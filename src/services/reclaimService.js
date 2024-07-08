@@ -3,12 +3,12 @@ const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
+const { processMonkeyTypeData } = require('./monkeyTypeService')
 
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
   const reclaimAppID = RECLAIM_APP_ID[providerName]
   const reclaimAppSecret = process.env[`${providerName}_SECRET`]
-
   console.log(
     `Sending signature request to Reclaim for userId: ${userId} with providerName: ${providerName}`
   )
@@ -34,6 +34,7 @@ exports.signWithProviderID = async (userId, providerId) => {
 }
 
 const handleReclaimSession = async (userId, reclaimClient, providerName) => {
+
   await reclaimClient.startSession({
     onSuccessCallback: async proof => {
       console.log(
@@ -48,6 +49,18 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
             break
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
+            break
+          case 'MONKEY_TYPE_SPEED_15S':
+            processedData = await processMonkeyTypeData(proof, providerName)
+            break
+          case 'MONKEY_TYPE_SPEED_30S':
+            processedData = await processMonkeyTypeData(proof, providerName)
+            break
+          case 'MONKEY_TYPE_SPEED_60S':
+            processedData = await processMonkeyTypeData(proof, providerName)
+            break
+          case 'MONKEY_TYPE_SPEED_120S':
+            processedData = await processMonkeyTypeData(proof, providerName)
             break
           default:
             throw new Error(`No handler for provider: ${providerName}`)
