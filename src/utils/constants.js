@@ -1,10 +1,10 @@
 exports.RECLAIM_PROVIDER_ID = {
   twitter: 'TWITTER_ANALYTICS_VIEWS',
-  '7369ce2a-5e2f-436d-9df7-918197d26b81':'GITHUB_ACCOUNT',
+  'github-provider-id':'GITHUB_ACCOUNT',// add the provider id inside 'Apostrophe'
 }
 exports.RECLAIM_APP_ID = {
   TWITTER_ANALYTICS_VIEWS: 'your-twitter-app-id',
-  GITHUB_ACCOUNT: '0x695FC75718ed80E17c4A72660314483Decf393B2',
+  GITHUB_ACCOUNT: 'github-app-id',/// inside the Apostrophe
 }
 
 //user id : 4a1c50a83cf6cc4b55b6b9c53e553e3f847c876b87fb333f71f5d05db8f1a7db
