@@ -21,6 +21,7 @@
   "homepage": "https://github.com/CatoffGaming/catoff-reclaim-integration-proposal#readme",
   "dependencies": {
     "@reclaimprotocol/js-sdk": "^1.3.6",
+    "@reclaimprotocol/zk-fetch": "^0.1.2",
     "axios": "^1.7.2",
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
