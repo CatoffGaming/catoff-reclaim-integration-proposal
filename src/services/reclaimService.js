@@ -1,10 +1,14 @@
-const axios = require('axios')
+const dotenv = require('dotenv')
 const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
+const { processhuggingData } = require('./huggingService')
+
+dotenv.config()
 
 exports.signWithProviderID = async (userId, providerId) => {
+  console.log(userId, providerId)
   const providerName = RECLAIM_PROVIDER_ID[providerId]
   const reclaimAppID = RECLAIM_APP_ID[providerName]
   const reclaimAppSecret = process.env[`${providerName}_SECRET`]
@@ -48,6 +52,9 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
             break
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
+            break
+          case 'hugging':
+            processedData = await processhuggingData(proof, providerName)
             break
           default:
             throw new Error(`No handler for provider: ${providerName}`)
