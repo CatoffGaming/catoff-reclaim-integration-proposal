@@ -1,20 +1,20 @@
 | proposal    | title               | description                                 | author                                       | discussions-to | status | type        | category | created    | requires |
 | ----------- | ------------------- | ------------------------------------------- | -------------------------------------------- | -------------- | ------ | ----------- | -------- | ---------- | -------- |
-| CRIP-Strava | Hugging Integration | Integration with Hugging to verify username | Ritik Prajapat <ritikprajapati084@gmail.com> |                | Draft  | Integration | CRIP     | 2024-07-14 |          |
+| CRIP-Strava | Hugging Face Integration | Integration with Hugging Face to verify username | Ritik Prajapat <ritikprajapati084@gmail.com> |                | Draft  | Integration | CRIP     | 2024-07-14 |          |
 
 ## Title
 
-Hugging Integration
+Hugging Face Integration
 
 ## Introduction
 
-This proposal outlines the integration of Strava as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process username on Hugging that is to be used within the Catoff platform. This will enable users to validate their claim regarding username needed for various challenges and verifications on Catoff.
+This proposal outlines the integration of Hugging Face as a data provider for the Catoff-Reclaim integration project. The integration aims to retrieve and process username on Hugging Face that is to be used within the Catoff platform. This will enable users to validate their claim regarding username needed for various challenges and verifications on Catoff.
 
 ## Use Cases
 
-1. **User Verification**: Verify the activity of users on Hugging by checking their username.
-2. **Challenge Participation**: Allow users to participate in challenges that require proof of hugging activity.
-3. **Skill Assessment**: Assess users' claim regarding hugging username.
+1. **User Verification**: Verify the activity of users on Hugging Face by checking their username.
+2. **Challenge Participation**: Allow users to participate in challenges that require proof of hugging face username and activity.
+3. **Skill Assessment**: Assess users' claim regarding hugging face username.
 
 ## Data Provider
 
