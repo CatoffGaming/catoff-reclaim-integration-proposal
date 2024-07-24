@@ -3,7 +3,7 @@ const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
-const { processGrowwAccountData } = require('./GrowwBalanceOnHoldService')
+const { processLeetcodeData } = require('./LeetcodeMaxStreakService')
 
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
@@ -15,10 +15,10 @@ exports.signWithProviderID = async (userId, providerId) => {
   )
 
   try {         
-    const reclaimClient = new Reclaim.ProofRequest('0x8DB7F57E462B89D5392A08dDFFa02cec430974B1')
-    await reclaimClient.buildProofRequest('3a73fdb0-7a52-4a3b-8df3-21e59bb5c481')
+    const reclaimClient = new Reclaim.ProofRequest('0x989AB80745743218D03F75C7A4E29F1E8151881a')
+    await reclaimClient.buildProofRequest('ebc4927b-ebac-4969-99fa-46d2218be85b')
     reclaimClient.setSignature(
-      await reclaimClient.generateSignature('0x2028acf98d4529c300cbdc1b7cb52de6e5d45ef48216711a6c3c3a7fe1feec56')
+      await reclaimClient.generateSignature('0x2762a40f292443a5d512613ada961528f2c9a69dc20d146438c0827b66331016')
     )
     const { requestUrl: signedUrl } =
       await reclaimClient.createVerificationRequest()
@@ -51,8 +51,8 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
             break
-          case 'GROWW_ACCOUNT_VERIFICATION':
-            processedData = await processGrowwAccountData(proof, providerName);
+          case 'LEETCODE_ACCOUNT_VERIFICATION':
+            processedData = await processLeetcodeData(proof, providerName);
             break
           default:
             throw new Error(`No handler for provider: ${providerName}`)
