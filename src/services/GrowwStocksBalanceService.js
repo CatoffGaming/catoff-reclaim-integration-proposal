@@ -6,17 +6,15 @@ exports.processGrowwAccountData = async (proof, providerName) => {
   const extractedParameters = JSON.parse(proof[0].claimData.context).extractedParameters;
   
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
-  const ongoingBalance = extractedParameters.ongoingTransactionsBalance;
-  const closingBalance = extractedParameters.closingBalance;
+  const stocksBalance = extractedParameters.stocksAvailableBalance;
 
-  console.log("The Ongoing Balance of your Groww account is:", ongoingBalance);
-  console.log("The Closing Balance of your Groww account is:", closingBalance);
+  console.log("The Stocks Balance of your Groww account is:", stocksBalance);
 
   return new ReclaimServiceResponse(
     providerName,
     lastUpdateTimeStamp,
     'ritikbhatt',
-    ongoingBalance,
+    stocksBalance,
     proof[0]
   );
 };
