@@ -6,15 +6,15 @@ exports.processGrowwAccountData = async (proof, providerName) => {
   const extractedParameters = JSON.parse(proof[0].claimData.context).extractedParameters;
   
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
-  const availableBalance = extractedParameters.availableBalance;
+  const creditScore = extractedParameters.creditScore;
 
-  console.log("THe available balance of your Groww account is: ", availableBalance);
+  console.log("The Credit Score of your Groww account is:", creditScore);
 
   return new ReclaimServiceResponse(
     providerName,
     lastUpdateTimeStamp,
-    'ritikbhatt', 
-    availableBalance,
+    'ritikbhatt',
+    creditScore,
     proof[0]
   );
 };
