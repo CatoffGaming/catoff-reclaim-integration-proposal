@@ -1,20 +1,20 @@
 const { ReclaimServiceResponse } = require('../utils/reclaimServiceResponse');
 
-exports.processLeetcodeData = async (proof, providerName) => {
+exports.processHumanBenchmarkData = async (proof, providerName) => {
   console.log("Proof is: ", proof[0]);
 
   const extractedParameters = JSON.parse(proof[0].claimData.context).extractedParameters;
   
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
-  const maxStreak = extractedParameters.streak;
+  const aimScore = extractedParameters.aimScore;
 
-  console.log("The Maximum Streak on your Leetcode is:", maxStreak);
+  console.log("The Aim Trainer Score on your Human Benchmark is:", aimScore);
 
   return new ReclaimServiceResponse(
     providerName,
     lastUpdateTimeStamp,
     'ritikbhatt',
-    maxStreak,
+    aimScore,
     proof[0]
   );
 };
