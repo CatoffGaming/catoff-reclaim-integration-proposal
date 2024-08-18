@@ -3,7 +3,7 @@ const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
-const { processHumanBenchmarkData } = require('./HumanBenchmarkChimpTestService')
+const { processHumanBenchmarkData } = require('./HumanBenchmarkWordsPerMinuteService')
 
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
@@ -15,10 +15,10 @@ exports.signWithProviderID = async (userId, providerId) => {
   )
 
   try {         
-    const reclaimClient = new Reclaim.ProofRequest('0xc3395eC754d7d10C7fBB9341008cC6382251E2ef')
-    await reclaimClient.buildProofRequest('18a83b08-4332-459d-a690-3179ffb3a632')
+    const reclaimClient = new Reclaim.ProofRequest('0x0DaaA5139c462C7bCc8B2F11F792dDD6979f447F')
+    await reclaimClient.buildProofRequest('09af2449-842c-4a69-8ab9-4d261b014600')
     reclaimClient.setSignature(
-      await reclaimClient.generateSignature('0x25f92c95d21c20d982d00cb7d49bdeb5701c598c87ea1d58be87cfa14463c4ab')
+      await reclaimClient.generateSignature('0x7f5bf7d559ffa24fd38c82ca99c657ea2458689d85e86fcbcde547d045f5a8d0')
     )
     const { requestUrl: signedUrl } =
       await reclaimClient.createVerificationRequest()
