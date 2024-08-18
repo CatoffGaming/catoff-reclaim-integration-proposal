@@ -3,6 +3,7 @@ const { Reclaim } = require('@reclaimprotocol/js-sdk')
 const { RECLAIM_PROVIDER_ID, RECLAIM_APP_ID } = require('../utils/constants')
 const { processTwitterData } = require('./twitterService')
 const { processGitHubData } = require('./githubService')
+const { processHumanBenchmarkData } = require('./HumanBenchmarkVerbalMemoryService')
 
 exports.signWithProviderID = async (userId, providerId) => {
   const providerName = RECLAIM_PROVIDER_ID[providerId]
@@ -13,11 +14,11 @@ exports.signWithProviderID = async (userId, providerId) => {
     `Sending signature request to Reclaim for userId: ${userId} with providerName: ${providerName}`
   )
 
-  try {
-    const reclaimClient = new Reclaim.ProofRequest(reclaimAppID)
-    await reclaimClient.buildProofRequest(providerId)
+  try {         
+    const reclaimClient = new Reclaim.ProofRequest('0x7C079fFEBb569A3Da8BdeD06b3773c40e9A95f2c')
+    await reclaimClient.buildProofRequest('c67fd7da-7ae9-407e-a468-310dce76f7a0')
     reclaimClient.setSignature(
-      await reclaimClient.generateSignature(reclaimAppSecret)
+      await reclaimClient.generateSignature('0x5a355d293c6e5c9492c57e72f9a76c2436e35ccd451cf09b22eb095948250d28')
     )
     const { requestUrl: signedUrl } =
       await reclaimClient.createVerificationRequest()
@@ -34,6 +35,7 @@ exports.signWithProviderID = async (userId, providerId) => {
 }
 
 const handleReclaimSession = async (userId, reclaimClient, providerName) => {
+  console.log('Starting session')
   await reclaimClient.startSession({
     onSuccessCallback: async proof => {
       console.log(
@@ -48,6 +50,9 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
             break
           case 'GITHUB_ACCOUNT_VERIFICATION':
             processedData = await processGitHubData(proof, providerName)
+            break
+          case 'HUMANBENCHMARK_ACCOUNT_VERIFICATION':
+            processedData = await processHumanBenchmarkData(proof, providerName);
             break
           default:
             throw new Error(`No handler for provider: ${providerName}`)
@@ -65,4 +70,5 @@ const handleReclaimSession = async (userId, reclaimClient, providerName) => {
       console.error(`Verification failed for userId: ${userId}`, error)
     },
   })
+  console.log('Ended session')
 }
