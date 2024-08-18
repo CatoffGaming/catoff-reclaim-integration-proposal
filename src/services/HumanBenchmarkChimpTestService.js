@@ -6,15 +6,15 @@ exports.processHumanBenchmarkData = async (proof, providerName) => {
   const extractedParameters = JSON.parse(proof[0].claimData.context).extractedParameters;
   
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
-  const aimScore = extractedParameters.aimScore;
+  const chimpScore = extractedParameters.chimpScore;
 
-  console.log("The Aim Trainer Score on your Human Benchmark is:", aimScore);
+  console.log("The Chimp Test Score on your Human Benchmark is:", chimpScore);
 
   return new ReclaimServiceResponse(
     providerName,
     lastUpdateTimeStamp,
     'ritikbhatt',
-    aimScore,
+    chimpScore,
     proof[0]
   );
 };
