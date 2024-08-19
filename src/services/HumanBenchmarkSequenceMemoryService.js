@@ -6,15 +6,15 @@ exports.processHumanBenchmarkData = async (proof, providerName) => {
   const extractedParameters = JSON.parse(proof[0].claimData.context).extractedParameters;
   
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
-  const verbalMemoryScore = extractedParameters.verbalMemoryScore;
+  const sequenceMemoryScore = extractedParameters.sequenceMemoryScore;
 
-  console.log("The Verbal Memory test score on your Human Benchmark is:", verbalMemoryScore);
+  console.log("The Sequence Memory test score on your Human Benchmark is:", sequenceMemoryScore);
 
   return new ReclaimServiceResponse(
     providerName,
     lastUpdateTimeStamp,
     'ritikbhatt',
-    verbalMemoryScore,
+    sequenceMemoryScore,
     proof[0]
   );
 };
